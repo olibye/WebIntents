@@ -68,10 +68,12 @@ Running
 Prerequisites:
 AppEngine: http://appengine.google.com/
 nginx: http://nginx.org/en/
+jinja2: http://jinja.pocoo.org/
 
 To run the server locally:
 
-    ./server/run.sh
+    cd server
+    run.sh
 
 The server will not be set up on port 80 or webintents.org so will need to do the following:
 
