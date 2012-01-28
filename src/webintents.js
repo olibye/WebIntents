@@ -14,7 +14,7 @@
    limitations under the License.
 */
 (function() {
-  if(!!window.Intent) return;
+  // debug if(!!window.Intent) return;
 
   var addEventListener = function(obj, type, func, capture) {
     if(!!window.addEventListener) {
@@ -57,6 +57,13 @@
     intents[id] = { intent: intent }; 
 
     var w = window.open(pickerSource, encodeNameTransport(intent), params);
+    
+    // 
+    var pickerIframe = document.createElement("iframe");
+    pickerIframe.name = encodeNameTransport(intent);
+    pickerIframe.src = pickerSource;
+    document.body.appendChild(pickerIframe);
+
     
     if(onResult) {
       iframe.contentWindow.postMessage(
@@ -290,7 +297,8 @@
         var head = heads[0];
         addEventListener(head, "DOMNodeInserted", onIntentDOMAdded, false);
         head.appendChild(iframe);
-        iframe.src = serverSource;
+        iframe.src = serverSource; // why run this twice when iframe onload event handler adds it?
+
       }
     }
   };
