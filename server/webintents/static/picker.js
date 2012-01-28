@@ -25,7 +25,6 @@ var decodeNameTransport = function(str) {
 attachEventListener(window, "load", function() {
   console.log(window.name);
   var intent = decodeNameTransport(window.name);
-  window.name = "";
   
   data = {};
   data.request = "startActivity";
@@ -39,5 +38,4 @@ attachEventListener(window, "load", function() {
   var suggestions = document.getElementById("suggestions");
   suggestions.src = "//registry.webintents.org/suggestions.html?action=" + intent.action + "&type=" + intent.type;
 
-  window.resizeTo(300,300);
 }, false);
