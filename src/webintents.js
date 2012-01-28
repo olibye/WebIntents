@@ -55,14 +55,13 @@
     intent._callback = (onResult) ? true : false;
     intent._error = (onFailure) ? true : false;
     intents[id] = { intent: intent }; 
-
-    var w = window.open(pickerSource, encodeNameTransport(intent), params);
     
-    // 
+    // Iframe instead of window
     var pickerIframe = document.createElement("iframe");
+    pickerIframe.id = id;
     pickerIframe.name = encodeNameTransport(intent);
     pickerIframe.src = pickerSource;
-    document.body.appendChild(pickerIframe);
+    document.body.insertBefore(pickerIframe,document.body.childNodes[0]);
 
     
     if(onResult) {
@@ -85,9 +84,16 @@
   };
 
   var handler = function(e) {
+	  
     var data;
     try {
       data = JSON.parse(e.data);
+      
+      if(!!data.intent == true) {
+    	  var pickerIFrame = document.getElementById(data.intent._id);
+    	  if (!!pickerIFrame) document.body.removeChild(pickerIFrame);
+      }
+      
       if(
          !!data.intent == true &&
          !!intents[data.intent._id] == true &&
